@@ -1,36 +1,36 @@
-const express = require('express');
+const express = require("express");
 
-const hbs = require('hbs');
+const hbs = require("hbs");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 
-// ****************** require body-parser ******************
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
+// ****************** require body-parsing ******************
+// const bodyParser = require('body-parser');
+app.use(express.urlencoded({ extended: true }));
 // *********************************************************
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'hbs');
+app.set("views", __dirname + "/views");
+app.set("view engine", "hbs");
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.get('/login', (req, res) => {
-  res.render('login-form');
+app.get("/login", (req, res) => {
+  res.render("login-form");
 });
 
-app.post('/login', (req, res) => {
-  const { username, pwd } = req.body;
-  console.log('------------------------');
-  console.log(`Username: ${username} - Password: ${pwd}`);
-  console.log('------------------------');
-  res.render('login-form', req.body);
-});
+app.post("/addmovie", (req, res) => {
+  const { title, year, director } = req.body;
+  console.log("THE BODY: ", { title, year, director });
+
+  Movie.create({ title, year, director })
+  .then(newMovie => res.render("login-form", newMovie)
+)})
 
 // Render index page
-app.get('/', (req, res) => {
-  res.render('index');
+app.get("/", (req, res) => {
+  res.render("index");
 });
 
 app.listen(process.env.PORT, () =>
